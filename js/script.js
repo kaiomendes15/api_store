@@ -14,62 +14,57 @@ async function carregarProdutos() {
 
 function alimentarCards(produtos) {
     const htmlCards = produtos.map(item => `
-        <div class="card">
-            <div class="card-content">
-                <div class="img">
-                    <img src="${item.image}" alt="${item.nome}" >
-                </div>
-                <h3>${item.nome}</h3>
-                <p>${item.descricao}</p>
-                <h4>${item.preco} R$</h4>
+        <div class="card-content">
+            <div class="align-image">
+                <img src="${item.image}" alt="${item.nome}">
             </div>
-
+                <div class="card-body">
+                    <h3 class="card-title">${item.nome}</h3 >
+                    <p>${item.preco} R$</h4>
+                </div>
             <div class="alinhar-botoes">
                 <button type="button" class="btn btn-danger" id="delete-${item.id}">Deletar</button>
                 
                 <!-- ? MODAL EDITAR (PUT) -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
             </div>
-        
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop-${item.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-usuario-${item.id}">
-                            <div class="mb-3">
-                                <label for="image-${item.id}">Imagem</label>
-                                <input type="file" class="form-control" id="image-${item.id}" name="image" ">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nome-${item.id}" class="form-label"></label>
-                                <input type="text" class="form-control" id="nome-${item.id}" name="nome" placeholder="Nome do produto" value="${item.nome}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="preco-${item.id}" class="form-label"></label>
-                                <input type="number" class="form-control" id="preco-${item.id}" name="preco" placeholder="Preço" value="${item.preco}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="descricao-${item.id}" class="form-label"></label>
-                                <input type="text" class="form-control" id="descricao-${item.id}" name="descricao" placeholder="Descrição" value="${item.descricao}">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnEdit-${item.id}">Salvar</button>
-                    </div>
+        </div>
+
+    
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop-${item.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <form id="form-usuario-${item.id}">
+                        <div class="mb-3">
+                            <label for="image-${item.id}">Imagem</label>
+                            <input type="file" class="form-control" id="image-${item.id}" name="image" ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nome-${item.id}" class="form-label"></label>
+                            <input type="text" class="form-control" id="nome-${item.id}" name="nome" placeholder="Nome do produto" value="${item.nome}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="preco-${item.id}" class="form-label"></label>
+                            <input type="number" class="form-control" id="preco-${item.id}" name="preco" placeholder="Preço" value="${item.preco}">
+                        </div>
+                    </form>
                 </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnEdit-${item.id}">Salvar</button>
+                </div>
+            </div>
             </div>
         </div>
     `).join("");
 
-    document.getElementById('card').innerHTML = htmlCards;
+    document.getElementById('organizar-cards').innerHTML = htmlCards;
 
     
     // ! APLICANDO OS BOTÕES DAS FUNÇÕES EDIT E DELETE DENTRO DO CONTEXTO ONDE O ITEM.ID ESTÁ INSERIDO
