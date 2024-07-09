@@ -15,13 +15,12 @@ async function carregarProdutos() {
 function alimentarCards(produtos) {
     const htmlCards = produtos.map(item => `
         <div class="card-content">
-            <div class="align-image">
-                <img src="${item.image}" alt="${item.nome}">
+            <img src="${item.image}" alt="${item.nome}">
+            <div class="card-body">
+                <h3 class="card-title">${item.nome}</h3 >
+                <p>${item.preco} R$</h4>
+                <button>+</button>
             </div>
-                <div class="card-body">
-                    <h3 class="card-title">${item.nome}</h3 >
-                    <p>${item.preco} R$</h4>
-                </div>
             <div class="alinhar-botoes">
                 <button type="button" class="btn btn-danger" id="delete-${item.id}">Deletar</button>
                 
