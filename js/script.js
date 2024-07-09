@@ -16,16 +16,16 @@ function alimentarCards(produtos) {
     const htmlCards = produtos.map(item => `
         <div class="card-content">
             <img src="${item.image}" alt="${item.nome}">
+            <h4>${item.nome}</h4 >
             <div class="card-body">
-                <h3 class="card-title">${item.nome}</h3 >
-                <p>${item.preco} R$</h4>
+                <span>${item.preco} R$</span>
                 <button>+</button>
             </div>
             <div class="alinhar-botoes">
-                <button type="button" class="btn btn-danger" id="delete-${item.id}">Deletar</button>
+                <button type="button" id="delete-${item.id}">Deletar</button>
                 
                 <!-- ? MODAL EDITAR (PUT) -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
             </div>
         </div>
 

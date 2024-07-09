@@ -1,34 +1,83 @@
-main {
-    padding: 0px 20px 0px 20px;
-}
 
 #organizar-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 20em));
     gap: 3%;
 }
 
-.card-content img {
-    width: 100%;
-    height: auto;
-    justify-content: center;
-
+.card-content {
+    max-width: 20em;
+    background-color: #fff;
+    padding: 1em;
+    box-shadow: 0 5px 5px #e1e1e1;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 700ms;
 }
 
-.align-image {
+.card-content img {
+    max-width: 100%;
+}
+
+.card-content h4 {
+    font-size: 1.35em;
+    margin: 0.5em 0;
+    font-weight: bold;
+}
+
+.card-content .card-body {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+.card-content .card-body button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 1em;
+    align-items: center;
+    padding: 0;
+}
+
+.alinhar-botoes {
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding-top: 15px;
 }
 
-.card-content {
-
+.alinhar-botoes button {
+    font-size: 0.9em;
+    border: none;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 200px;
-    text-align: center;
-    transition: box-shadow 0.3s ease-in-out;
+    transition: 700ms;
+}
+
+.card-content:hover .alinhar-botoes button {
+    background-color: lightslategray;
+    color: #fff;
+    transition: 300ms;
+    border: none;
+}
+
+.card-content:hover{
+    background-color: lightslategray;
+    color: #fff;
+    transition: 300ms;
+}
+
+.card-content:hover button{
+    color: #000;
+    background-color: #fff;
+}
+
+@media screen and (max-width:576px) {
+    .card-content {
+        font-size: 0.9em;
+    }
 }
 
