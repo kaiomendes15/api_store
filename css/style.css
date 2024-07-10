@@ -3,19 +3,31 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 20em));
     gap: 3%;
+    padding: 0;
+    margin: auto;
 }
 
 .card-content {
-    max-width: 20em;
     background-color: #fff;
     padding: 1em;
     box-shadow: 0 5px 5px #e1e1e1;
     font-family: Arial, Helvetica, sans-serif;
     transition: 700ms;
+    margin: 10px;
 }
 
 .card-content img {
-    max-width: 100%;
+    width: 70%;
+    height: 70%;
+}
+
+.image-square {
+    max-height: 300px;
+}
+
+.space {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-content h4 {
@@ -29,6 +41,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0;
+    margin: 0;
    
 }
 
@@ -42,12 +56,14 @@
     font-size: 1em;
     align-items: center;
     padding: 0;
+    margin: 0;
 }
 
 .alinhar-botoes {
     display: flex;
     align-items: center;
-    padding-top: 15px;
+    padding: 10px 0px 25px 0px;
+    margin: 0;
 }
 
 .alinhar-botoes button {
@@ -55,6 +71,11 @@
     border: none;
     background-color: #fff;
     transition: 700ms;
+    padding: 0 10px 0 0;
+}
+
+.card-content:hover .alinhar-botoes button:hover {
+    color: rgb(0, 0, 0)
 }
 
 .card-content:hover .alinhar-botoes button {
@@ -74,6 +95,8 @@
     color: #000;
     background-color: #fff;
 }
+
+
 
 @media screen and (max-width:576px) {
     .card-content {

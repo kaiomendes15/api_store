@@ -22,10 +22,10 @@ function alimentarCards(produtos) {
                 <button>+</button>
             </div>
             <div class="alinhar-botoes">
-                <button type="button" id="delete-${item.id}">Deletar</button>
-                
-                <!-- ? MODAL EDITAR (PUT) -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
+            <button type="button" id="delete-${item.id}">Deletar</button>
+            
+            <!-- ? MODAL EDITAR (PUT) -->
+            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
             </div>
         </div>
 
@@ -42,7 +42,7 @@ function alimentarCards(produtos) {
                     <form id="form-usuario-${item.id}">
                         <div class="mb-3">
                             <label for="image-${item.id}">Imagem</label>
-                            <input type="file" class="form-control" id="image-${item.id}" name="image" ">
+                            <input type="file" class="form-control" id="image-${item.id}" name="image">
                         </div>
                         <div class="mb-3">
                             <label for="nome-${item.id}" class="form-label"></label>
@@ -65,8 +65,6 @@ function alimentarCards(produtos) {
 
     document.getElementById('organizar-cards').innerHTML = htmlCards;
 
-    
-    // ! APLICANDO OS BOTÕES DAS FUNÇÕES EDIT E DELETE DENTRO DO CONTEXTO ONDE O ITEM.ID ESTÁ INSERIDO
     produtos.forEach(item => {
         document.getElementById(`btnEdit-${item.id}`).addEventListener('click', () => editarProdutos(item.id));
         document.getElementById(`delete-${item.id}`).addEventListener('click', () => deletarProdutos(item.id)); 
@@ -77,7 +75,6 @@ function alimentarCards(produtos) {
 async function salvarProduto() {
     const nomeProduto = document.getElementById('nome').value;
     const precoProduto = document.getElementById('preco').value;
-    const descProduto = document.getElementById('descricao').value;
     const image = document.getElementById("image").files[0];
 
     if (!nomeProduto || !precoProduto || !image) {
@@ -95,7 +92,6 @@ async function salvarProduto() {
         const payload = {
             nome: nomeProduto,
             preco: precoProduto,
-            descricao: descProduto,
             image: imageBase64
         };
 
@@ -125,10 +121,9 @@ async function salvarProduto() {
 async function editarProdutos(id) {
     const nomeProduto = document.getElementById(`nome-${id}`).value;
     const precoProduto = document.getElementById(`preco-${id}`).value;
-    const descProduto = document.getElementById(`descricao-${id}`).value;
     const image = document.getElementById(`image-${id}`).files[0];
 
-    let newProduct = { nome: nomeProduto, preco: precoProduto, descricao: descProduto };
+    let newProduct = { nome: nomeProduto, preco: precoProduto };
 
     if (image) {
         let reader = new FileReader();
@@ -145,6 +140,7 @@ async function editarProdutos(id) {
                 const response = await fetch(`${urlApi}/${id}`, requestMethod);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 carregarProdutos();
+                document.querySelector(`#staticBackdrop-${id} .btn-close`).click(); // Fechar modal após editar
             } catch (error) {
                 console.error('Error editing product:', error);
                 Swal.fire({
@@ -166,6 +162,7 @@ async function editarProdutos(id) {
             const response = await fetch(`${urlApi}/${id}`, requestMethod);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             carregarProdutos();
+            document.querySelector(`#staticBackdrop-${id} .btn-close`).click(); // Fechar modal após editar
         } catch (error) {
             console.error('Error editing product:', error);
             Swal.fire({
@@ -178,7 +175,6 @@ async function editarProdutos(id) {
 }
 
 // * DELETE
-
 async function deletarProdutos(id) {
     const requestMethod = {
         method: "DELETE"
@@ -188,15 +184,14 @@ async function deletarProdutos(id) {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         carregarProdutos();
     } catch (error) {
-        console.error('Error editing product:', error);
+        console.error('Error deleting product:', error);
         Swal.fire({
-            title: "Erro ao editar produto",
+            title: "Erro ao deletar produto",
             text: error.message,
             icon: "error"
         });
     }
 }
-
 
 // Chama a função para carregar os produtos
 // ? GET
@@ -204,5 +199,3 @@ document.addEventListener('DOMContentLoaded', carregarProdutos);
 
 // ? BOTÃO SALVAR
 document.getElementById('btn-salvarProduto').addEventListener('click', salvarProduto);
-
-
