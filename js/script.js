@@ -68,11 +68,16 @@ function alimentarCards(produtos) {
         document.getElementById(`delete-${item.id}`).addEventListener('click', () => deletarProdutos(item.id)); 
     });
 
+    // * vvvvv DEPOIS DO CHATGPT AJEITAR vvvvv
+
     const searchInput = document.querySelector("[data-search]");
 
     searchInput.addEventListener("input", (e) => {
+        // ? Captura o valor atual do campo de entrada e o converte para letras minúsculas
         const value = e.target.value.toLowerCase();
+
         // ! PERGUNTAR SOBRE ESSE .target e do pq criar essa variavel "value"
+        // ! PERGUNTAR sobre esse "e" passado como parâmetro (deve ser o valor digitado)
         produtos.forEach(item => {
             const card = document.querySelector(`.card-content[data-id='${item.id}']`);
             const isVisible = item.nome.toLowerCase().includes(value);
@@ -80,7 +85,6 @@ function alimentarCards(produtos) {
             card.style.display = isVisible ? "" : "none"; 
             // ! isso aq deve ser um condicional, perguntar tb
             console.log(value)
-            // ! PERGUNTAR SOBRE A LINHA 78 
         });
     });
 
@@ -100,8 +104,8 @@ function alimentarCards(produtos) {
     //         users = data.map(user => {
     //             const card = document.querySelector(`.card-content[data-id='${user.id}']`);
     //             const productName = card.querySelector(".productName");
-    //             productName.textContent = user.name;
-    //             return { nome: user.name, element: card };
+    //             productName.textContent = user.nome;
+    //             return { nome: user.nome, element: card };
     //         });
     //     });
 }
