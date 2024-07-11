@@ -14,51 +14,49 @@ async function carregarProdutos() {
 
 function alimentarCards(produtos) {
     const htmlCards = produtos.map(item => `
-        <div class="card-content">
+        <div class="card-content" data-id="${item.id}">
             <img src="${item.image}" alt="${item.nome}">
-            <h4>${item.nome}</h4 >
+            <h4 productName>${item.nome}</h4>
             <div class="card-body">
                 <span>${item.preco} R$</span>
                 <button>+</button>
             </div>
             <div class="alinhar-botoes">
-            <button type="button" id="delete-${item.id}">Deletar</button>
-            
-            <!-- ? MODAL EDITAR (PUT) -->
-            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
+                <button type="button" id="delete-${item.id}">Deletar</button>
+                <!-- ? MODAL EDITAR (PUT) -->
+                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-${item.id}" id="editar-${item.id}">Editar</button>
             </div>
         </div>
 
-    
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop-${item.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-usuario-${item.id}">
+                            <div class="mb-3">
+                                <label for="image-${item.id}">Imagem</label>
+                                <input type="file" class="form-control" id="image-${item.id}" name="image">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nome-${item.id}" class="form-label"></label>
+                                <input type="text" class="form-control" id="nome-${item.id}" name="nome" placeholder="Nome do produto" value="${item.nome}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="preco-${item.id}" class="form-label"></label>
+                                <input type="number" class="form-control" id="preco-${item.id}" name="preco" placeholder="Preço" value="${item.preco}">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEdit-${item.id}">Salvar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="form-usuario-${item.id}">
-                        <div class="mb-3">
-                            <label for="image-${item.id}">Imagem</label>
-                            <input type="file" class="form-control" id="image-${item.id}" name="image">
-                        </div>
-                        <div class="mb-3">
-                            <label for="nome-${item.id}" class="form-label"></label>
-                            <input type="text" class="form-control" id="nome-${item.id}" name="nome" placeholder="Nome do produto" value="${item.nome}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="preco-${item.id}" class="form-label"></label>
-                            <input type="number" class="form-control" id="preco-${item.id}" name="preco" placeholder="Preço" value="${item.preco}">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnEdit-${item.id}">Salvar</button>
-                </div>
-            </div>
             </div>
         </div>
     `).join("");
@@ -69,6 +67,43 @@ function alimentarCards(produtos) {
         document.getElementById(`btnEdit-${item.id}`).addEventListener('click', () => editarProdutos(item.id));
         document.getElementById(`delete-${item.id}`).addEventListener('click', () => deletarProdutos(item.id)); 
     });
+
+    const searchInput = document.querySelector("[data-search]");
+
+    searchInput.addEventListener("input", (e) => {
+        const value = e.target.value.toLowerCase();
+        // ! PERGUNTAR SOBRE ESSE .target e do pq criar essa variavel "value"
+        produtos.forEach(item => {
+            const card = document.querySelector(`.card-content[data-id='${item.id}']`);
+            const isVisible = item.nome.toLowerCase().includes(value);
+            // ! PERGUNTAR SOBRE ESSE .includes
+            card.style.display = isVisible ? "" : "none"; 
+            // ! isso aq deve ser um condicional, perguntar tb
+            console.log(value)
+            // ! PERGUNTAR SOBRE A LINHA 78 
+        });
+    });
+
+    // * vvvvv ANTES DO CHATGPT AJEITAR vvvvv
+    // const searchInput = document.querySelector("[data-search]")
+
+    // let users = []
+    
+    // searchInput.addEventListener("input", (e) => {
+    //     const value = e.target.value
+    //     console.log(users)
+    // })
+    
+    // fetch("http://localhost:3000/produtos")
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         users = data.map(user => {
+    //             const card = document.querySelector(`.card-content[data-id='${user.id}']`);
+    //             const productName = card.querySelector(".productName");
+    //             productName.textContent = user.name;
+    //             return { nome: user.name, element: card };
+    //         });
+    //     });
 }
 
 // * POST
